@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../main-page/main.css" />
+		<title>ToDoZ</title>
+	</head>
+	<body>
+		<header id="navbar">
+			<nav>
+				<div class="platform-logo">
+					<a href="#"><span>T</span>o<span>D</span>o<span>Z</span></a>
+				</div>
+				<div id="profile">
+					<img src="../assets/user-icon.jpg" alt="user-icon" width="32" height="32" class="user-avatar" />
+				</div>
+			</nav>
+		</header>
+		<main id="content">
+			<section id="head">
+				<div id="welcome">
+					<h1>Welcome back, <span id="user-name">Ardhika</span>👋</h1>
+					<h3 id="reminder"></h3>
+				</div>
+				<div id="tracker">
+					<div class="platform-logo">
+						<p><span>T</span>o<span>D</span>o<span>Z</span></p>
+					</div>
+				</div>
+			</section>
+			<aside id="categories-tab">
+				<div id="categories-wrapper">
+					<div id="category-list">
+						<button class="category active" id="personal">
+							<ion-icon name="person-outline"></ion-icon>
+							<p>Personal</p>
+						</button>
+						<button class="category" id="business">
+							<ion-icon name="briefcase-outline"></ion-icon>
+							<p>Business</p>
+						</button>
+						<button class="category" id="work">
+							<ion-icon name="business-outline"></ion-icon>
+							<p>Work</p>
+						</button>
+					</div>
+					<button id="add-category">
+						<ion-icon name="add-outline"></ion-icon>
+						<p>Category</p>
+					</button>
+				</div>
+				<div id="user-info">
+					<img src="../assets/user-icon.jpg" alt="" width="32" height="32" class="user-avatar" />
+					<div id="user-details">
+						<p>Ardhika</p>
+						<p>Jr. Software Engineer</p>
+					</div>
+				</div>
+			</aside>
+			<section id="main">
+				<div id="status-column">
+					<button id="todo" class="tab active">
+						<img src="../assets/todo-icon.png" alt="" width="24" height="24" />
+						<h3>To-Do</h3>
+					</button>
+					<button id="done" class="tab">
+						<img src="../assets/complete-icon.png" alt="" width="24" height="24" />
+						<h3>Done</h3>
+					</button>
+				</div>
+				<div id="tasks-area">
+					<div id="add-task">
+						<ion-icon name="add-outline"></ion-icon>
+						<p>Add new task</p>
+					</div>
+				</div>
+				<div id="add-task-modal">
+					<div class="modal-content">
+						<div id="title-input">
+							<label for="task-title">Title</label>
+							<input type="text" id="task-title" placeholder="Enter task title" required />
+						</div>
+						<div id="description-input">
+							<label for="task-description">Description</label>
+							<textarea id="task-description" placeholder="Enter task description" required></textarea>
+						</div>
+						<div class="checkbox-wrapper-42">
+							<input id="cbx-42" type="checkbox" />
+							<label class="cbx" for="cbx-42"></label>
+							<p>Has due date</p>
+						</div>
+						<div class="hide" id="due-date-input">
+							<label for="task-due-date">Due date</label>
+							<input type="date" id="task-due-date" />
+						</div>
+						<div id="priority-level-selection">
+							<p>Priority</p>
+							<div id="selected" aria-required="true">
+								<p>Select priority level</p>
+								<ion-icon name="chevron-down-outline" class="icon"></ion-icon>
+							</div>
+							<div id="options">
+								<div class="option" data-value="low">Low</div>
+								<div class="option" data-value="medium">Medium</div>
+								<div class="option" data-value="high">High</div>
+							</div>
+						</div>
+						<div class="cta-button">
+							<button>OK</button>
+							<button>Cancel</button>
+						</div>
+					</div>
+				</div>
+				<div id="add-category-modal">
+					<div class="modal-content">
+						<div id="category-name-input">
+							<label for="category-name">Add New Category</label>
+							<input type="text" id="category-name" placeholder="Enter category name" required />
+						</div>
+						<div class="cta-button">
+							<button>Add</button>
+						</div>
+					</div>
+				</div>
+				<button type="button" id="add-task-button">+</button>
+			</section>
+		</main>
+		<footer>
+			<div class="made-by">
+				<p class="footer-heart">
+					Made with
+					<g-emoji
+						class="g-emoji"
+						alias="heart"
+						fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png">
+						<img
+							class="emoji"
+							alt="heart"
+							height="20"
+							width="20"
+							src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" />
+					</g-emoji>
+					by <a href="https://github.com/ardhikaptr11">Ardhika</a>
+				</p>
+			</div>
+		</footer>
+		<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+		<script src="../main-page/main.js"></script>
+	</body>
+</html>
