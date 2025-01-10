@@ -300,7 +300,6 @@ const closeAddCategoryModal = () => {
 	addCategoryModal.classList.remove("show");
 	categoryNameInput.classList.remove("error");
 	categoryNameInput.classList.remove("error-contain-whitespace");
-	document.documentElement.style.overflow = "auto";
 };
 
 const openAddTaskModal = () => {
@@ -337,7 +336,6 @@ const openAddTaskModal = () => {
 
 const addCategoryConfirmationButton = document.querySelector("#add-category-modal .cta-button button");
 const openAddCategoryModal = () => {
-	document.documentElement.style.overflow = "hidden";
 	addCategoryModal.classList.toggle("show");
 	categoryInput.addEventListener("input", () => {
 		categoryNameInput.classList.remove("error");
@@ -516,6 +514,25 @@ const renderTaskCard = (task) => {
 	if (currentActiveTab === "todo") {
 		const head = taskCard.querySelector(".head");
 		head.style.rowGap = "0";
+
+		taskCard.addEventListener("click", (e) => {
+			taskCardClicked = true;
+			const isCheckbox = e.target.classList.contains("check-23");
+
+			if (!isCheckbox) {
+				openAddTaskModal();
+				const addTaskModal = document.getElementById("add-task-modal");
+				addTaskModal.querySelector("#task-title").value = task.title;
+				addTaskModal.querySelector("#task-description").value = task.description;
+				addTaskModal.querySelector("#cbx-42").checked = task.hasDueDate;
+				if (task.hasDueDate) {
+					addTaskModal.querySelector("#due-date-input").classList.remove("hide");
+					addTaskModal.querySelector("#due-date-input").classList.add("show");
+				}
+				addTaskModal.querySelector("#task-due-date").value = task.dueDate;
+				addTaskModal.querySelector("#selected p").textContent = task.priority;
+			}
+		});
 
 		taskCard.querySelectorAll(".options-icon").forEach((icon) => {
 			icon.style.display = "none";
