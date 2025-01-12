@@ -612,9 +612,8 @@ const renderTasks = () => {
 	tasksArea.innerHTML = "";
 	tasksArea.style.justifyContent = "stretch";
 	const tasks = categories[currentActiveCategory][currentActiveTab];
-	const totalTasks = Object.values(categories).reduce((total, category) => total + category.todo.length, 0);
 
-	if (totalTasks === 0 && currentActiveTab === "todo" && screenWidth <= 576) {
+	if (tasks.length === 0 && currentActiveTab === "todo" && screenWidth <= 576) {
 		tasksArea.style.justifyContent = "center";
 		tasksArea.innerHTML = "<p id='no-tasks-added'>No tasks added yet.</p>";
 		return;
