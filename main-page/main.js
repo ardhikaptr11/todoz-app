@@ -53,6 +53,13 @@ const addCategoryModal = document.getElementById("add-category-modal");
 const addTaskModal = document.getElementById("add-task-modal");
 const addCategoryButton = document.querySelector("button#add-category");
 
+const totalTasks = Object.values(categories).reduce((total, category) => total + category.todo.length, 0);
+const screenWidth = window.innerWidth;
+
+if (totalTasks === 0 && screenWidth <= 576) {
+	tasksArea.style.justifyContent = "center";
+}
+
 const resetCheckboxState = () => {
 	checkbox.checked = false;
 	dueDateInput.classList.remove("show");
@@ -439,8 +446,23 @@ const toggleModal = (modal, button) => {
 	modals.forEach((m) => (m.style.display = "none"));
 	if (!isVisible) {
 		const rect = button.getBoundingClientRect();
-		modal.style.top = `${button.offsetTop + button.offsetHeight + 2}px`;
-		modal.style.left = `${button.offsetLeft + 3}px`;
+		modal.style.top = `${button.offsetTop + button.offsetHeight + 3}px`;
+
+		if (screenWidth <= 320) {
+			modal.style.left = `${screenWidth - 0.45 * screenWidth}px`;
+		} else if (screenWidth <= 390) {
+			modal.style.left = `${screenWidth - 0.375 * screenWidth}px`;
+		} else if (screenWidth <= 395) {
+			modal.style.left = `${screenWidth - 0.365 * screenWidth}px`;
+		} else if (screenWidth <= 420) {
+			modal.style.left = `${screenWidth - 0.35 * screenWidth}px`;
+		} else if (screenWidth <= 430) {
+			modal.style.left = `${screenWidth - 0.335 * screenWidth}px`;
+		} else if (screenWidth <= 576) {
+			modal.style.left = `${screenWidth - 0.25 * screenWidth}px`;
+		} else {
+			modal.style.left = `${button.offsetLeft + 3}px`;
+		}
 		modal.style.display = "flex";
 	} else {
 		modal.style.display = "none";
@@ -512,6 +534,14 @@ const renderTaskCard = (task) => {
 	closeAddTaskModal();
 
 	if (currentActiveTab === "todo") {
+		if (screenWidth <= 576 && tasksArea.querySelector("#no-tasks-added")) {
+			tasksArea.querySelector("#no-tasks-added").style.display = "none";
+		}
+
+		if (screenWidth <= 992) {
+			taskCard.classList.add("no-hover");
+		}
+
 		const head = taskCard.querySelector(".head");
 		head.style.rowGap = "0";
 
@@ -582,10 +612,17 @@ const renderTasks = () => {
 	tasksArea.innerHTML = "";
 	tasksArea.style.justifyContent = "stretch";
 	const tasks = categories[currentActiveCategory][currentActiveTab];
+	const totalTasks = Object.values(categories).reduce((total, category) => total + category.todo.length, 0);
+
+	if (totalTasks === 0 && currentActiveTab === "todo" && screenWidth <= 576) {
+		tasksArea.style.justifyContent = "center";
+		tasksArea.innerHTML = "<p id='no-tasks-added'>No tasks added yet.</p>";
+		return;
+	}
 
 	if (tasks.length === 0 && currentActiveTab === "done") {
 		tasksArea.style.justifyContent = "center";
-		tasksArea.innerHTML = "<p>No completed tasks yet.</p>";
+		tasksArea.innerHTML = "<p>No tasks completed yet.</p>";
 		return;
 	}
 
@@ -597,9 +634,9 @@ const renderTasks = () => {
 		const addTaskCard = document.createElement("div");
 		addTaskCard.id = "add-task";
 		addTaskCard.innerHTML = `
-			<ion-icon name="add-outline"></ion-icon>
-			<p>Add new task</p>
-		`;
+				<ion-icon name="add-outline"></ion-icon>
+				<p>Add new task</p>
+			`;
 		addTaskCard.addEventListener("click", () => {
 			addTaskCardClicked = true;
 			openAddTaskModal();
