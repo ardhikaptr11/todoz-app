@@ -296,6 +296,10 @@ hr {
 	overflow-y: auto;
 }
 
+#no-tasks-added {
+	display: none;
+}
+
 .checkbox-wrapper-42 {
 	display: flex;
 	align-items: center;
@@ -638,10 +642,6 @@ hr {
 .checkbox-wrapper-42 p,
 #tasks-area > p {
 	color: #65767e;
-}
-
-#tasks-area > p {
-	font-size: 16px;
 }
 
 .task-card {
@@ -1005,16 +1005,16 @@ footer {
 		display: none;
 	}
 
-	.delete-task-modal {
-		left: 285px !important;
-	}
-
 	.description {
 		display: none;
 	}
 
 	.task-card {
 		height: fit-content;
+	}
+
+	#no-tasks-added {
+		display: block;
 	}
 }
 
@@ -1112,6 +1112,10 @@ footer {
 		font-size: 84px;
 	}
 
+	#no-tasks-added {
+		display: none;
+	}
+
 	#add-task,
 	.task-card {
 		flex: 1 1 calc(50% - 12px);
@@ -1166,10 +1170,6 @@ footer {
 		order: 2;
 		text-align: center;
 	}
-
-	/* #categories-tab {
-		padding: 12px;
-	} */
 
 	#user-info {
 		display: none;
