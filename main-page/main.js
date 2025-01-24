@@ -53,11 +53,29 @@ const addCategoryModal = document.getElementById("add-category-modal");
 const addTaskModal = document.getElementById("add-task-modal");
 const addCategoryButton = document.querySelector("button#add-category");
 
+const userAvatar = document.querySelector("#profile > .user-avatar");
+const subMenu = document.getElementById("sub-menu-wrapper");
+const dropdownInfo = document.getElementById("dropdown-info");
+
+if (userAvatar) {
+	userAvatar.addEventListener("click", () => {
+		subMenu.classList.toggle("active");
+	});
+}
+
 const totalTasks = Object.values(categories).reduce((total, category) => total + category.todo.length, 0);
 const screenWidth = window.innerWidth;
 
 if (totalTasks === 0 && screenWidth <= 576) {
 	tasksArea.style.justifyContent = "center";
+}
+
+if (screenWidth >= 992) {
+	dropdownInfo.querySelector("div").style.display = "none";
+}
+
+if (screenWidth >= 1200) {
+	subMenu.style.right = "42px";
 }
 
 const resetCheckboxState = () => {
@@ -351,7 +369,7 @@ const openAddCategoryModal = () => {
 };
 
 addCategoryConfirmationButton.addEventListener("click", () => {
-	const categoryName = categoryInput.value;
+	const categoryName = categoryInput.value.toLowerCase();
 	addNewCategory(categoryName);
 });
 
