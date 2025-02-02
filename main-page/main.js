@@ -27,6 +27,7 @@ for (const category in categories) {
 const statusColumn = document.getElementById("status-column");
 const todoTab = document.getElementById("todo");
 const doneTab = document.getElementById("done");
+const deleteAllButton = document.getElementById("delete-all");
 const tasksArea = document.getElementById("tasks-area");
 const addTaskCard = document.getElementById("add-task");
 const addTaskButton = document.getElementById("add-task-button");
@@ -51,6 +52,7 @@ const cancelButton = ctaButton.querySelector("button:not(:first-of-type)");
 const confirmButton = ctaButton.querySelector("button:first-of-type");
 const addCategoryModal = document.getElementById("add-category-modal");
 const addTaskModal = document.getElementById("add-task-modal");
+const deleteAllTasksModal = document.getElementById("delete-all-modal");
 const addCategoryButton = document.querySelector("button#add-category");
 
 const userAvatar = document.querySelector("#profile > .user-avatar");
@@ -65,6 +67,11 @@ if (userAvatar) {
 
 const totalTasks = Object.values(categories).reduce((total, category) => total + category.todo.length, 0);
 const screenWidth = window.innerWidth;
+
+if (totalTasks === 0) {
+	deleteAllButton.classList.add("disabled");
+	deleteAllButton.style.pointerEvents = "none";
+}
 
 if (totalTasks === 0 && screenWidth <= 576) {
 	tasksArea.style.justifyContent = "center";
@@ -125,6 +132,7 @@ const resetAll = () => {
 	selectedPriority = null;
 	selected.querySelector("p").textContent = "Select priority level";
 	selected.style.color = "#ccc";
+	confirmButton.style.cursor = "pointer";
 };
 
 const stripTime = (date) => new Date(date.toDateString());
@@ -283,6 +291,36 @@ const addNewCategory = (category) => {
 	closeAddCategoryModal();
 };
 
+const deleteAllTasks = () => {
+	totalTodo -= categories[currentActiveCategory].todo.length;
+	categories[currentActiveCategory][currentActiveTab] = [];
+	renderTasks();
+	renderHeadContent();
+	deleteAllButton.classList.add("disabled");
+	deleteAllButton.style.pointerEvents = "none";
+};
+
+deleteAllButton.addEventListener("click", () => {
+	if (screenWidth <= 576) {
+		deleteAllTasksModal.classList.add("show");
+		const confirmButton = deleteAllTasksModal.querySelector(".cta-button button:first-of-type");
+		const cancelButton = deleteAllTasksModal.querySelector(".cta-button button:not(:first-of-type)");
+
+		confirmButton.addEventListener("click", () => {
+			deleteAllTasks();
+			deleteAllTasksModal.classList.remove("show");
+		});
+
+		cancelButton.addEventListener("click", () => {
+			deleteAllTasksModal.classList.remove("show");
+		});
+
+		return;
+	}
+
+	deleteAllTasks();
+});
+
 const addTask = () => {
 	const taskTitle = titleInput.value;
 	const taskDescription = descriptionInput.value;
@@ -306,6 +344,11 @@ const addTask = () => {
 		totalTodo++;
 		renderHeadContent();
 	}
+};
+
+// TODO: Need further action
+const editTask = () => {
+	alert("This feature will be available soon. The developer is really confused about it right now 😅");
 };
 
 const closeAddTaskModal = () => {
@@ -338,8 +381,15 @@ const openAddTaskModal = () => {
 		cancelButton.textContent = "Cancel";
 		resetPointerEvents();
 	} else {
-		confirmButton.textContent = "Cancel";
+		confirmButton.textContent = "Save";
+		console.log(confirmButton);
+		confirmButton.style.cursor = "not-allowed";
 		cancelButton.textContent = "Delete";
+		addTaskModal.addEventListener("click", (e) => {
+			if (!e.target.closest("#add-task-modal .modal-content")) {
+				closeAddTaskModal();
+			}
+		});
 		disablePointerEvents();
 	}
 
@@ -386,7 +436,13 @@ cancelButton.addEventListener("click", () => {
 });
 
 confirmButton.addEventListener("click", () => {
-	confirmButton.textContent === "OK" ? addTask() : closeAddTaskModal();
+	if (confirmButton.textContent === "OK") {
+		addTask();
+		deleteAllButton.classList.remove("disabled");
+		deleteAllButton.style.pointerEvents = "auto";
+	} else {
+		editTask();
+	}
 });
 
 const calculateTotalIncompleteTasks = () => {
@@ -403,6 +459,7 @@ const renderHeadContent = () => {
 	const tracker = document.getElementById("tracker");
 
 	const totalIncomplete = calculateTotalIncompleteTasks();
+	console.log(totalDone, totalTodo);
 
 	if (totalDone === totalTodo) {
 		tracker.innerHTML = `
@@ -654,7 +711,7 @@ const renderTasks = () => {
 				<ion-icon name="add-outline"></ion-icon>
 				<p>Add new task</p>
 			`;
-		addTaskCard.addEventListener("click", () => {
+		addTaskCard.addEventListener("click", (e) => {
 			addTaskCardClicked = true;
 			openAddTaskModal();
 		});
@@ -677,11 +734,17 @@ const switchTab = (tab) => {
 	currentActiveTab = tab;
 	const screenWidth = window.innerWidth;
 
-	currentActiveTab === "todo"
-		? screenWidth >= 768
-			? (addTaskButton.style.display = "none")
-			: (addTaskButton.style.display = "block")
-		: (addTaskButton.style.display = "none");
+	if (currentActiveTab === "done") {
+		addTaskButton.style.display = "none";
+		deleteAllButton.style.display = "none";
+	} else if (currentActiveTab === "todo") {
+		if (screenWidth >= 768) {
+			addTaskButton.style.display = "none";
+		} else {
+			addTaskButton.style.display = "block";
+		}
+		deleteAllButton.style.display = "flex";
+	}
 
 	toggleStatusTabs();
 	renderTasks();
