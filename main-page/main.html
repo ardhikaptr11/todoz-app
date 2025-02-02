@@ -20,7 +20,7 @@
 						<div id="dropdown-info">
 							<div>
 								<h5>Ardhika</h5>
-								<p>Jr. Software Engineer</p>
+								<p>Software Engineer</p>
 								<hr />
 							</div>
 							<a href="#" class="sub-menu-link" id="logout">
@@ -70,19 +70,25 @@
 					<img src="../assets/user-icon.jpg" alt="" width="32" height="32" class="user-avatar" />
 					<div id="user-details">
 						<p>Ardhika</p>
-						<p>Jr. Software Engineer</p>
+						<p>Software Engineer</p>
 					</div>
 				</div>
 			</aside>
 			<section id="main">
-				<div id="status-column">
-					<button id="todo" class="tab active">
-						<img src="../assets/todo-icon.png" alt="" width="24" height="24" />
-						<h3>To-Do</h3>
-					</button>
-					<button id="done" class="tab">
-						<img src="../assets/complete-icon.png" alt="" width="24" height="24" />
-						<h3>Done</h3>
+				<div id="tab-wrapper">
+					<div id="status-column">
+						<button id="todo" class="tab active">
+							<img src="../assets/todo-icon.png" alt="" width="24" height="24" />
+							<h3>To-Do</h3>
+						</button>
+						<button id="done" class="tab">
+							<img src="../assets/complete-icon.png" alt="" width="24" height="24" />
+							<h3>Done</h3>
+						</button>
+					</div>
+					<button id="delete-all">
+						<ion-icon name="trash-outline"></ion-icon>
+						<h3>Delete All</h3>
 					</button>
 				</div>
 				<div id="tasks-area">
@@ -137,6 +143,15 @@
 						</div>
 						<div class="cta-button">
 							<button>Add</button>
+						</div>
+					</div>
+				</div>
+				<div id="delete-all-modal">
+					<div class="modal-content">
+						<p>Are you sure you want to delete all tasks?</p>
+						<div class="cta-button">
+							<button>Yes</button>
+							<button>No</button>
 						</div>
 					</div>
 				</div>
