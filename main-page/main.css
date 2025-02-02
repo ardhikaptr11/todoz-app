@@ -346,19 +346,24 @@
 	overflow-y: auto;
 }
 
+#tab-wrapper {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
 #status-column {
 	width: fit-content;
 	display: flex;
 	background-color: transparent;
-	margin-bottom: 16px;
 	position: sticky;
 	top: 0;
-	background-color: #d5cdff;
 	border-radius: 8px;
 }
 
 #todo,
-#done {
+#done,
+#delete-all {
 	display: flex;
 	align-items: center;
 	gap: 4px;
@@ -371,9 +376,26 @@
 	background-color: transparent;
 }
 
-#status-column h3 {
+#delete-all {
+	font-size: 20px;
+	color: #e42c5e;
+}
+
+#delete-all ion-icon {
+	font-size: 20px;
+}
+
+#delete-all.disabled {
+	color: #e42c5eb3;
+}
+
+#status-column h3,
+#delete-all h3 {
 	font-size: 16px;
 	font-weight: 700;
+}
+
+#status-column h3 {
 	color: #2b1887;
 }
 
@@ -644,7 +666,8 @@
 }
 
 #add-task-modal,
-#add-category-modal {
+#add-category-modal,
+#delete-all-modal {
 	display: none;
 	position: fixed;
 	top: 0;
@@ -657,7 +680,8 @@
 }
 
 #add-task-modal.show,
-#add-category-modal.show {
+#add-category-modal.show,
+#delete-all-modal.show {
 	display: flex;
 }
 
@@ -665,6 +689,10 @@
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 8px;
+}
+
+#delete-all-modal .modal-content {
+	gap: 15px;
 }
 
 #add-task-button {
@@ -1091,6 +1119,10 @@ footer {
 		font-size: 40px;
 	}
 
+	#delete-all h3 {
+		display: none;
+	}
+
 	#completed,
 	#incomplete {
 		font-size: 64px;
@@ -1111,6 +1143,8 @@ footer {
 
 	#no-tasks-added {
 		display: block;
+		width: 100%;
+		text-align: center;
 	}
 }
 
@@ -1154,7 +1188,8 @@ footer {
 	}
 
 	#add-task-modal .modal-content,
-	#add-category-modal .modal-content {
+	#add-category-modal .modal-content,
+	#delete-all-modal .modal-content {
 		width: 95%;
 	}
 
